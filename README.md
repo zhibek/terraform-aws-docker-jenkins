@@ -55,7 +55,10 @@ ssh ubuntu@<hostname>.compute-1.amazonaws.com
 lynx http://<hostname>.compute-1.amazonaws.com:8080/
 ```
 
-8) If there is a need to re-stage the server at any point, `taint` and re-`apply` via `Terraform`:  
+8) Try out Jenkins, by adding a `Multibranch Pipeline` job such as: https://github.com/zhibek/behat-example.git  
+This job type relies on the `Jenkinsfile` inside the `git` repo, therefore no additional config is required in the `Jenkins` UI.
+
+9) If there is a need to re-stage the server at any point, `taint` and re-`apply` via `Terraform`:  
 ```
 terraform taint aws_instance.ci
 terraform apply
