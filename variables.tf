@@ -5,8 +5,6 @@ variable "region" { description = "AWS Region" }
 
 variable "az_1" { description = "AWS AZ 1" }
 
-variable "services_ami" { description = "AWS Services AMI" }
-
 variable "client" { description = "Client" }
 variable "tag" { description = "Tag" }
 

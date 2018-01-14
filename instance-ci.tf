@@ -1,5 +1,5 @@
 resource "aws_instance" "ci" {
-    ami = "${var.services_ami}"
+    ami = "${data.aws_ami.ubuntu.id}"
     instance_type = "t2.micro"
     availability_zone = "${aws_subnet.public-z1.availability_zone}"
     subnet_id = "${aws_subnet.public-z1.id}"

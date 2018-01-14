@@ -1,5 +1,4 @@
 region = "us-east-1" ## a valid AWS region
-services_ami = "ami-d651b8ac" ## an AWS ami, making sure its valid in the AWS region specified
 
 az_1 = "a" ## 1st availability zone
 
