@@ -32,7 +32,7 @@ terraform plan
 terraform apply
 ```
 
-7) Check the output of the provison and access the server via SSH and/or your web browser.  
+7) Check the output of the provision and access the server via SSH and/or your web browser.  
 ```
 ## Provision output...
 ...
@@ -46,19 +46,23 @@ aws_platform-name = okappy-global-us-east-1
 ```
 
 ```
-## Access server via SSH
-ssh ubuntu@<hostname>.compute-1.amazonaws.com
+## Access server via SSH and Docker
+ssh -i .private/aws-key.pem ubuntu@<hostname>.compute.amazonaws.com
+sudo docker ps
+sudo docker exec -it <container-id> bash
 ```
 
 ```
 ## Access server via HTTP
-lynx http://<hostname>.compute-1.amazonaws.com:8080/
+lynx http://<hostname>.compute.amazonaws.com:8080/
 ```
 
-8) Try out Jenkins, by adding a `Multibranch Pipeline` job such as: https://github.com/zhibek/behat-example.git  
+8) Complete Jenkins setup by finding the `/var/jenkins_home/secrets/initialAdminPassword` file via SSH and entering the contents in the HTTP interface (the HTTP interface should prompt you to do this). Then follow the instructions provided, installing standard plugins and creating the first admin account.
+
+9) Try out Jenkins, by adding a `Multibranch Pipeline` job such as: https://github.com/zhibek/behat-example.git  
 This job type relies on the `Jenkinsfile` inside the `git` repo, therefore no additional config is required in the `Jenkins` UI.
 
-9) If there is a need to re-stage the server at any point, `taint` and re-`apply` via `Terraform`:  
+10) If there is a need to re-stage the server at any point, `taint` and re-`apply` via `Terraform`:  
 ```
 terraform taint aws_instance.ci
 terraform apply
