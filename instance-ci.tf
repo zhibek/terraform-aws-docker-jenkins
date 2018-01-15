@@ -7,32 +7,36 @@ resource "aws_instance" "ci" {
     key_name = "${aws_key_pair.default.key_name}"
     associate_public_ip_address = true
 
-    provisioner "remote-exec" {
-        inline = [
-            "sudo apt-get update",
-            "sudo apt-get -y install curl",
-            "curl -sSL https://get.docker.com/ | sudo sh",
-            <<EOT
-sudo docker run -d \
-    -u root \
-    -p 8080:8080 \
-    -p 50000:50000 \
-    -v /var/run/docker.sock:/var/run/docker.sock \
-    -v jenkins_home:/var/jenkins_home \
-    jenkinsci/blueocean
-EOT
-        ]
-        connection {
-            user = "ubuntu"
-            private_key = "${file("./.private/aws-key.pem")}"
-        }
-    }
-
     tags {
         Name = "${var.client}-${var.tag}-ci"
+        Client = "${var.client}"
         deployment = "${var.client}-${var.tag}-ci"
         director = "terraform"
         job = "ci"
+    }
+}
+
+resource "aws_ebs_volume" "ci" {
+    availability_zone = "${aws_subnet.public-z1.availability_zone}"
+    size              = 8
+
+    tags {
+        Name = "${var.client}-${var.tag}-ci-volume"
         Client = "${var.client}"
+    }
+}
+
+resource "aws_volume_attachment" "ci" {
+    device_name  = "/dev/sdh"
+    volume_id    = "${aws_ebs_volume.ci.id}"
+    instance_id  = "${aws_instance.ci.id}"
+
+    provisioner "remote-exec" {
+        script = "remote_scripts/setup_ci.sh"
+        connection {
+            host = "${aws_instance.ci.public_ip}"
+            user = "ubuntu"
+            private_key = "${file("./.private/aws-key.pem")}"
+        }
     }
 }

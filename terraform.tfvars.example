@@ -1,4 +1,4 @@
-region = "us-east-1" ## a valid AWS region
+region = "eu-west-1" ## a valid AWS region
 
 az_1 = "a" ## 1st availability zone
 
