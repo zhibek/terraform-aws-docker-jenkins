@@ -1,6 +1,6 @@
 resource "aws_instance" "ci" {
     ami = "${data.aws_ami.ubuntu.id}"
-    instance_type = "t2.micro"
+    instance_type = "t2.small"
     availability_zone = "${aws_subnet.public-z1.availability_zone}"
     subnet_id = "${aws_subnet.public-z1.id}"
     vpc_security_group_ids = ["${aws_security_group.unrestricted-outgoing.id}","${aws_security_group.private-ssh.id}","${aws_security_group.ci-http.id}"]
