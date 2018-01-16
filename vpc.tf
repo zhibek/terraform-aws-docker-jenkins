@@ -3,7 +3,9 @@ resource "aws_vpc" "default" {
     enable_dns_hostnames = true
 
     tags {
-        Name = "${var.client}-${var.tag}-${var.region}"
-        Client = "${var.client}"
+        name = "${var.org}-${var.env}-${var.region}"
+        org = "${var.org}"
+        env = "${var.env}"
+        director = "terraform"
     }
 }

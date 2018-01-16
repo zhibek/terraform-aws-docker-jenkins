@@ -2,8 +2,10 @@ resource "aws_internet_gateway" "default" {
     vpc_id = "${aws_vpc.default.id}"
 
     tags {
-        Name = "${var.client}-${var.tag}-${var.region}"
-        Client = "${var.client}"
+        name = "${var.org}-${var.env}-${var.region}"
+        org = "${var.org}"
+        env = "${var.env}"
+        director = "terraform"
     }
 }
 
@@ -15,8 +17,10 @@ resource "aws_route_table" "public" {
     }
 
     tags {
-        Name = "${var.client}-${var.tag}-${var.region}-public"
-        Client = "${var.client}"
+        name = "${var.org}-${var.env}-${var.region}-public"
+        org = "${var.org}"
+        env = "${var.env}"
+        director = "terraform"
     }
 }
 

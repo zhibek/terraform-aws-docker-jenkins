@@ -8,9 +8,9 @@ resource "aws_instance" "ci" {
     associate_public_ip_address = true
 
     tags {
-        Name = "${var.client}-${var.tag}-ci"
-        Client = "${var.client}"
-        deployment = "${var.client}-${var.tag}-ci"
+        name = "${var.org}-${var.env}-ci"
+        org = "${var.org}"
+        env = "${var.env}"
         director = "terraform"
         job = "ci"
     }
@@ -21,8 +21,11 @@ resource "aws_ebs_volume" "ci" {
     size              = 8
 
     tags {
-        Name = "${var.client}-${var.tag}-ci-volume"
-        Client = "${var.client}"
+        name = "${var.org}-${var.env}-ci"
+        org = "${var.org}"
+        env = "${var.env}"
+        director = "terraform"
+        job = "ci"
     }
 }
 

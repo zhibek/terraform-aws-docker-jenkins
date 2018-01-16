@@ -4,7 +4,9 @@ resource "aws_subnet" "public-z1" {
     availability_zone = "${var.region}${var.az_1}"
 
     tags {
-        Name = "${var.client}-${var.tag}-${var.region}-public-z1"
-        Client = "${var.client}"
+        name = "${var.org}-${var.env}-${var.region}-public-z1"
+        org = "${var.org}"
+        env = "${var.env}"
+        director = "terraform"
     }
 }

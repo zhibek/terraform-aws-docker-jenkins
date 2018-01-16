@@ -7,7 +7,7 @@ output "aws_vpc-default-region" {
 }
 
 output "aws_platform-name" {
-    value = "${var.client}-${var.tag}-${var.region}"
+    value = "${var.org}-${var.env}-${var.region}"
 }
 
 ####################################################################################################

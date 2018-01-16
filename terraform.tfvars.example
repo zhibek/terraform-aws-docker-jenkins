@@ -2,7 +2,7 @@ region = "eu-west-1" ## a valid AWS region
 
 az_1 = "a" ## 1st availability zone
 
-client = "" ## identifier for the client
-tag = "" ## identifier for the project
+org = "" ## identifier for the organisation
+env = "" ## identifier for the environment
 
 private_access_ips = "" ## list of IP addresses/ranges, using the format 0.0.0.0/32 (multiple IP addresses/ranges separated by commas)

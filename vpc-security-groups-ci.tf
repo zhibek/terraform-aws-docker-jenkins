@@ -1,11 +1,13 @@
 resource "aws_security_group" "unrestricted-outgoing" {
-    name = "${var.client}-${var.tag}-unrestricted-outgoing"
+    name = "${var.org}-${var.env}-unrestricted-outgoing"
     description = "unrestricted-outgoing security group"
     vpc_id = "${aws_vpc.default.id}"
 
     tags {
-        Name = "${var.client}-${var.tag}-unrestricted-outgoing"
-        Client = "${var.client}"
+        name = "${var.org}-${var.env}-unrestricted-outgoing"
+        org = "${var.org}"
+        env = "${var.env}"
+        director = "terraform"
     }
 }
 
@@ -19,13 +21,15 @@ resource "aws_security_group_rule" "unrestricted-outgoing-allow-all-egress" {
 }
 
 resource "aws_security_group" "private-ssh" {
-    name = "${var.client}-${var.tag}-private-ssh"
+    name = "${var.org}-${var.env}-private-ssh"
     description = "private-ssh security group"
     vpc_id = "${aws_vpc.default.id}"
 
     tags {
-        Name = "${var.client}-${var.tag}-private-ssh"
-        Client = "${var.client}"
+        name = "${var.org}-${var.env}-private-ssh"
+        org = "${var.org}"
+        env = "${var.env}"
+        director = "terraform"
     }
 }
 
@@ -39,13 +43,16 @@ resource "aws_security_group_rule" "private-ssh-allow-private-tcp-22-ingress" {
 }
 
 resource "aws_security_group" "ci-http" {
-    name = "${var.client}-${var.tag}-ci-http"
+    name = "${var.org}-${var.env}-ci-http"
     description = "ci-http security group"
     vpc_id = "${aws_vpc.default.id}"
 
     tags {
-        Name = "${var.client}-${var.tag}-ci-http"
-        Client = "${var.client}"
+        name = "${var.org}-${var.env}-ci-http"
+        org = "${var.org}"
+        env = "${var.env}"
+        director = "terraform"
+        job = "ci"
     }
 }
 
