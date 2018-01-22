@@ -21,11 +21,21 @@ sudo apt-get update
 sudo apt-get -y install curl
 curl -sSL https://get.docker.com/ | sudo sh
 
+echo "Configuring Docker Daemon (require larger SHM size for Chrome)"
+sudo echo '[Service]
+ExecStart=
+ExecStart=/usr/bin/dockerd -H fd:// --default-shm-size=512M' > /tmp/simple_dockerd.conf
+sudo mkdir -p /etc/systemd/system/docker.service.d
+sudo mv /tmp/simple_dockerd.conf /etc/systemd/system/docker.service.d/simple_dockerd.conf
+sudo systemctl daemon-reload
+sudo systemctl restart docker
+
 echo "Starting Docker with jenkinsci/blueocean image"
 sudo docker run -d \
--u root \
+--user root \
 -p 8080:8080 \
 -p 50000:50000 \
--v /var/run/docker.sock:/var/run/docker.sock \
--v /data:/var/jenkins_home \
+--volume /var/run/docker.sock:/var/run/docker.sock \
+--volume /data:/var/jenkins_home \
+--shm-size=512M \
 jenkinsci/blueocean

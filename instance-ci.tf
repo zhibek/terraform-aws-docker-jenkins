@@ -31,15 +31,26 @@ resource "aws_ebs_volume" "ci" {
 
 resource "aws_volume_attachment" "ci" {
     device_name  = "/dev/sdh"
-    volume_id    = "${aws_ebs_volume.ci.id}"
     instance_id  = "${aws_instance.ci.id}"
+    volume_id    = "${aws_ebs_volume.ci.id}"
 
     provisioner "remote-exec" {
-        script = "remote_scripts/setup_ci.sh"
+        script = "remote_scripts/create_ci.sh"
         connection {
             host = "${aws_instance.ci.public_ip}"
             user = "ubuntu"
             private_key = "${file("./.private/aws-key.pem")}"
         }
+    }
+
+    provisioner "remote-exec" {
+        when   = "destroy"
+        script = "remote_scripts/destroy_ci.sh"
+        connection {
+            host = "${aws_instance.ci.public_ip}"
+            user = "ubuntu"
+            private_key = "${file("./.private/aws-key.pem")}"
+        }
+
     }
 }
